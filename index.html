@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>나는야 고양이! - 이룸 작가의 그림책 여정</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Noto+Serif+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    
+    body {
+      background: linear-gradient(180deg, #F5EDE0 0%, #EBE0CC 100%);
+      font-family: 'Noto Serif KR', 'Apple SD Gothic Neo', 'Malgun Gothic', Georgia, serif;
+      color: #3D2C1F;
+      min-height: 100vh;
+      padding: 0;
+    }
+    
+    .display {
+      font-family: 'Cormorant Garamond', 'Noto Serif KR', serif;
+      letter-spacing: -0.02em;
+    }
+    
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 40px 24px;
+      position: relative;
+    }
+    
+    .container::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.4'/%3E%3C/svg%3E");
+      opacity: 0.06;
+      pointer-events: none;
+      z-index: 0;
+    }
+    
+    .container > * { position: relative; z-index: 1; }
+    
+    /* 상단 표제 */
+    .header {
+      text-align: center;
+      margin-bottom: 48px;
+    }
+    
+    .header-eyebrow {
+      font-family: 'Cormorant Garamond', serif;
+      color: #8B6F47;
+      letter-spacing: 0.15em;
+      font-size: 12px;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+    
+    .header-title {
+      font-family: 'Cormorant Garamond', 'Noto Serif KR', serif;
+      font-size: 56px;
+      color: #3D2C1F;
+      font-weight: 600;
+      letter-spacing: -0.03em;
+      margin-bottom: 16px;
+      line-height: 1.1;
+    }
+    
+    .header-authors {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      color: #8B6F47;
+      font-size: 15px;
+    }
+    
+    .header-authors .divider { color: #C97D5C; }
+    
+    .header-period {
+      display: inline-block;
+      margin-top: 24px;
+      padding: 8px 20px;
+      background: #3D2C1F;
+      color: #F5EDE0;
+      font-size: 13px;
+      letter-spacing: 0.1em;
+    }
+    
+    /* 인트로 */
+    .intro {
+      text-align: center;
+      margin-bottom: 64px;
+      max-width: 640px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    
+    .intro p {
+      color: #5C4A35;
+      font-size: 17px;
+      line-height: 1.7;
+    }
+    
+    /* 섹션 헤더 */
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 32px;
+    }
+    
+    .section-header .line {
+      flex: 1;
+      height: 1px;
+      background: #C97D5C;
+      opacity: 0.3;
+    }
+    
+    .section-header h2 {
+      font-family: 'Cormorant Garamond', 'Noto Serif KR', serif;
+      font-size: 28px;
+      color: #3D2C1F;
+      font-weight: 500;
+    }
+    
+    /* 로드맵 */
+    .roadmap {
+      margin-bottom: 80px;
+    }
+    
+    .milestones {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 16px;
+    }
+    
+    .milestone {
+      position: relative;
+      padding: 24px 22px;
+      min-height: 280px;
+      background: #FAF6F0;
+      border: 1px solid #D4BFA0;
+      transition: transform 0.2s ease;
+    }
+    
+    .milestone:hover {
+      transform: translateY(-2px);
+    }
+    
+    .milestone.highlight {
+      background: #C97D5C;
+      color: #F5EDE0;
+      border-color: #C97D5C;
+    }
+    
+    .milestone-icon {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      font-size: 28px;
+      opacity: 0.8;
+    }
+    
+    .milestone-step {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 11px;
+      letter-spacing: 0.15em;
+      color: #8B6F47;
+      margin-bottom: 4px;
+    }
+    
+    .milestone.highlight .milestone-step {
+      color: #F5EDE0;
+      opacity: 0.8;
+    }
+    
+    .milestone-month {
+      font-family: 'Cormorant Garamond', 'Noto Serif KR', serif;
+      font-size: 24px;
+      color: #3D2C1F;
+      margin-bottom: 4px;
+    }
+    
+    .milestone.highlight .milestone-month {
+      color: #F5EDE0;
+    }
+    
+    .milestone-duration {
+      font-size: 11px;
+      color: #8B6F47;
+      margin-bottom: 16px;
+    }
+    
+    .milestone.highlight .milestone-duration {
+      color: #F5EDE0;
+      opacity: 0.7;
+    }
+    
+    .milestone-divider {
+      width: 32px;
+      height: 1px;
+      background: #C97D5C;
+      opacity: 0.5;
+      margin-bottom: 16px;
+    }
+    
+    .milestone.highlight .milestone-divider {
+      background: #F5EDE0;
+    }
+    
+    .milestone-title {
+      font-weight: 600;
+      font-size: 16px;
+      color: #3D2C1F;
+      margin-bottom: 4px;
+    }
+    
+    .milestone.highlight .milestone-title {
+      color: #F5EDE0;
+    }
+    
+    .milestone-sub {
+      font-size: 12px;
+      color: #C97D5C;
+      font-style: italic;
+      margin-bottom: 12px;
+    }
+    
+    .milestone.highlight .milestone-sub {
+      color: #F5EDE0;
+      opacity: 0.8;
+    }
+    
+    .milestone-desc {
+      font-size: 12px;
+      line-height: 1.6;
+      color: #5C4A35;
+      white-space: pre-line;
+    }
+    
+    .milestone.highlight .milestone-desc {
+      color: #F5EDE0;
+      opacity: 0.9;
+    }
+    
+    /* 매체 선택 안내 */
+    .medium-box {
+      margin-bottom: 80px;
+      background: #FAF6F0;
+      border: 1px solid #D4BFA0;
+      padding: 32px;
+    }
+    
+    .medium-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+    
+    .medium-header h3 {
+      font-family: 'Cormorant Garamond', 'Noto Serif KR', serif;
+      font-size: 22px;
+      color: #3D2C1F;
+      font-weight: 500;
+    }
+    
+    .medium-intro {
+      color: #5C4A35;
+      font-size: 15px;
+      line-height: 1.7;
+      margin-bottom: 24px;
+    }
+    
+    .medium-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    
+    .medium-card {
+      padding: 20px;
+      background: #F5EDE0;
+    }
+    
+    .medium-card-title {
+      font-family: 'Cormorant Garamond', 'Noto Serif KR', serif;
+      font-size: 18px;
+      color: #3D2C1F;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+    
+    .medium-card ul {
+      list-style: none;
+      font-size: 13px;
+      color: #5C4A35;
+      line-height: 1.7;
+    }
+    
+    .medium-card ul li::before {
+      content: '· ';
+    }
+    
+    .medium-footer {
+      margin-top: 20px;
+      text-align: center;
+      font-size: 12px;
+      color: #8B6F47;
+      font-style: italic;
+    }
+    
+    /* 체크리스트 */
+    .checklist-section {
+      margin-bottom: 48px;
+    }
+    
+    .checklist-intro {
+      text-align: center;
+      color: #5C4A35;
+      font-size: 14px;
+      margin-bottom: 32px;
+    }
+    
+    .checklist {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 12px;
+    }
+    
+    .spread {
+      padding: 12px;
+      background: #FAF6F0;
+      border: 1px solid #D4BFA0;
+      transition: all 0.2s ease;
+      cursor: default;
+    }
+    
+    .spread.partial {
+      border-color: #C97D5C;
+    }
+    
+    .spread.done {
+      background: #C97D5C;
+      border-color: #C97D5C;
+      color: #F5EDE0;
+    }
+    
+    .spread:hover {
+      transform: translateY(-2px);
+    }
+    
+    .spread-num {
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      color: #8B6F47;
+      margin-bottom: 8px;
+    }
+    
+    .spread.done .spread-num {
+      color: #F5EDE0;
+    }
+    
+    .spread-check {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      width: 100%;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 4px 0;
+      text-align: left;
+    }
+    
+    .check-circle {
+      display: inline-block;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      border: 1px solid #8B6F47;
+      flex-shrink: 0;
+      transition: all 0.2s ease;
+    }
+    
+    .check-circle.checked {
+      background: #C97D5C;
+      border-color: #C97D5C;
+    }
+    
+    .spread.done .check-circle.checked {
+      background: #F5EDE0;
+      border-color: #F5EDE0;
+    }
+    
+    .check-label {
+      font-size: 12px;
+      color: #5C4A35;
+    }
+    
+    .spread.done .check-label {
+      color: #F5EDE0;
+    }
+    
+    /* 진행률 */
+    .progress {
+      max-width: 400px;
+      margin: 32px auto 0;
+    }
+    
+    .progress-label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 12px;
+      color: #8B6F47;
+      margin-bottom: 8px;
+    }
+    
+    .progress-bar {
+      height: 8px;
+      background: #FAF6F0;
+      border: 1px solid #D4BFA0;
+      border-radius: 999px;
+      overflow: hidden;
+    }
+    
+    .progress-fill {
+      height: 100%;
+      background: #C97D5C;
+      transition: width 0.5s ease;
+      width: 0%;
+    }
+    
+    /* 페이스 가이드 */
+    .pace-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-bottom: 80px;
+    }
+    
+    .pace-card {
+      padding: 20px;
+      background: #FAF6F0;
+      border: 1px solid #D4BFA0;
+    }
+    
+    .pace-eyebrow {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 11px;
+      color: #8B6F47;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      margin-bottom: 8px;
+    }
+    
+    .pace-title {
+      font-family: 'Cormorant Garamond', 'Noto Serif KR', serif;
+      font-size: 24px;
+      color: #3D2C1F;
+      margin-bottom: 4px;
+    }
+    
+    .pace-desc {
+      font-size: 13px;
+      color: #5C4A35;
+    }
+    
+    /* 응원 메시지 */
+    .farewell {
+      text-align: center;
+      max-width: 560px;
+      margin: 0 auto;
+    }
+    
+    .farewell-quote {
+      font-family: 'Cormorant Garamond', serif;
+      color: #C97D5C;
+      font-size: 36px;
+      margin-bottom: 16px;
+    }
+    
+    .farewell-main {
+      font-family: 'Cormorant Garamond', 'Noto Serif KR', serif;
+      color: #3D2C1F;
+      font-size: 30px;
+      line-height: 1.4;
+      font-weight: 500;
+      margin-bottom: 16px;
+    }
+    
+    .farewell-sub {
+      color: #5C4A35;
+      font-size: 15px;
+      line-height: 1.7;
+      font-style: italic;
+    }
+    
+    .farewell-brand {
+      margin-top: 40px;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 12px;
+      color: #8B6F47;
+      letter-spacing: 0.2em;
+    }
+    
+    /* 모바일/태블릿 */
+    @media (max-width: 900px) {
+      .milestones {
+        grid-template-columns: 1fr;
+      }
+      .medium-grid {
+        grid-template-columns: 1fr;
+      }
+      .checklist {
+        grid-template-columns: repeat(3, 1fr);
+      }
+      .pace-grid {
+        grid-template-columns: 1fr;
+      }
+      .header-title {
+        font-size: 42px;
+      }
+      .farewell-main {
+        font-size: 24px;
+      }
+    }
+    
+    /* 인쇄용 */
+    @media print {
+      body {
+        background: white;
+      }
+      .spread:hover, .milestone:hover {
+        transform: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    
+    <!-- 상단 표제 -->
+    <div class="header">
+      <p class="header-eyebrow">Picture Book Journey · 포근나루 그림책 프로젝트</p>
+      <h1 class="header-title">나는야 고양이!</h1>
+      <div class="header-authors">
+        <span>글 햇살</span>
+        <span class="divider">·</span>
+        <span>그림 이룸</span>
+      </div>
+      <div class="header-period">2026.06 — 2026.12 / 6개월의 여정</div>
+    </div>
+
+    <!-- 인트로 -->
+    <div class="intro">
+      <p>
+        이룸 작가의 첫 그림책이 만들어지는 길이에요.<br>
+        천천히, 즐겁게, 우리만의 속도로.
+      </p>
+      <a href="conti.html" style="display:inline-block;margin-top:24px;padding:12px 28px;background:#C97D5C;color:#F5EDE0;font-size:14px;letter-spacing:0.05em;text-decoration:none;border-radius:2px;">📖 그림책 콘티 보러 가기 →</a>
+    </div>
+
+    <!-- 로드맵 -->
+    <div class="roadmap">
+      <div class="section-header">
+        <div class="line"></div>
+        <h2>우리의 여정</h2>
+        <div class="line"></div>
+      </div>
+      
+      <div class="milestones">
+        <div class="milestone">
+          <div class="milestone-icon">✏️</div>
+          <div class="milestone-step">STEP 01</div>
+          <div class="milestone-month">6월</div>
+          <div class="milestone-duration">4주</div>
+          <div class="milestone-divider"></div>
+          <div class="milestone-title">콘티 만들기</div>
+          <div class="milestone-sub">매체 선택</div>
+          <div class="milestone-desc">편집부에서
+페이지 콘티를 만들어요.
+색연필과 마카펜 샘플을
+그려보고 결정해요.</div>
+        </div>
+        
+        <div class="milestone">
+          <div class="milestone-icon">🐱</div>
+          <div class="milestone-step">STEP 02</div>
+          <div class="milestone-month">7~8월</div>
+          <div class="milestone-duration">8주</div>
+          <div class="milestone-divider"></div>
+          <div class="milestone-title">스케치</div>
+          <div class="milestone-sub">여름방학!</div>
+          <div class="milestone-desc">24개 스프레드를
+천천히 그려요.
+여름방학이라
+시간이 많아요.</div>
+        </div>
+        
+        <div class="milestone">
+          <div class="milestone-icon">🎨</div>
+          <div class="milestone-step">STEP 03</div>
+          <div class="milestone-month">9~10월</div>
+          <div class="milestone-duration">8주</div>
+          <div class="milestone-divider"></div>
+          <div class="milestone-title">채색</div>
+          <div class="milestone-sub">색을 입혀요</div>
+          <div class="milestone-desc">스케치 위에
+색을 입혀요.
+월·수·금
+한 시간씩.</div>
+        </div>
+        
+        <div class="milestone">
+          <div class="milestone-icon">📖</div>
+          <div class="milestone-step">STEP 04</div>
+          <div class="milestone-month">11월</div>
+          <div class="milestone-duration">3주</div>
+          <div class="milestone-divider"></div>
+          <div class="milestone-title">가제본</div>
+          <div class="milestone-sub">책으로 만들기</div>
+          <div class="milestone-desc">완성된 그림을
+묶어서 진짜
+책처럼 만들어요.</div>
+        </div>
+        
+        <div class="milestone highlight">
+          <div class="milestone-icon">🏆</div>
+          <div class="milestone-step">STEP 05</div>
+          <div class="milestone-month">12월 첫째 주</div>
+          <div class="milestone-duration">1주</div>
+          <div class="milestone-divider"></div>
+          <div class="milestone-title">응모!</div>
+          <div class="milestone-sub">창비 그림책상</div>
+          <div class="milestone-desc">이루미의 꿈,
+창비에 우리 책을
+보내요.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 매체 선택 안내 -->
+    <div class="medium-box">
+      <div class="medium-header">
+        <div style="font-size: 24px;">🎨</div>
+        <h3>6월 — 그림 도구 정하기</h3>
+      </div>
+      <p class="medium-intro">
+        본격적인 작업 전에 두 가지 도구로 샘플을 그려봐요. 둘 다 그려본 다음, 어느 쪽이 더 즐거운지·작품에 어울리는지 보고 정하면 돼요.
+      </p>
+      
+      <div class="medium-grid">
+        <div class="medium-card">
+          <div class="medium-card-title">색연필</div>
+          <ul>
+            <li>부드럽고 따뜻한 느낌</li>
+            <li>천천히 디테일 살리기 좋음</li>
+            <li>한국 그림책 명작들의 결</li>
+          </ul>
+        </div>
+        
+        <div class="medium-card">
+          <div class="medium-card-title">마카펜</div>
+          <ul>
+            <li>선명하고 또렷한 색감</li>
+            <li>작업 속도가 빠름</li>
+            <li>만화 같은 활기찬 느낌</li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="medium-footer">
+        결정은 6월 말 — 이룸 작가가 직접
+      </div>
+    </div>
+
+    <!-- 체크리스트 -->
+    <div class="checklist-section">
+      <div class="section-header">
+        <div class="line"></div>
+        <h2>24개의 스프레드</h2>
+        <div class="line"></div>
+      </div>
+      
+      <p class="checklist-intro">
+        한 스프레드씩 완성될 때마다 체크하세요. 작은 동그라미가 조금씩 채워지는 걸 보는 것만으로도 힘이 돼요.
+      </p>
+      
+      <div class="checklist" id="checklist"></div>
+      
+      <div class="progress">
+        <div class="progress-label">
+          <span>완성된 스프레드</span>
+          <span id="progress-count">0 / 24</span>
+        </div>
+        <div class="progress-bar">
+          <div class="progress-fill" id="progress-fill"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 페이스 가이드 -->
+    <div class="pace-grid">
+      <div class="pace-card">
+        <div class="pace-eyebrow">학기 중</div>
+        <div class="pace-title">월 · 수 · 금</div>
+        <div class="pace-desc">하루 1시간씩</div>
+      </div>
+      
+      <div class="pace-card">
+        <div class="pace-eyebrow">방학</div>
+        <div class="pace-title">7 — 8월</div>
+        <div class="pace-desc">집중 작업 기간</div>
+      </div>
+      
+      <div class="pace-card">
+        <div class="pace-eyebrow">쉬는 날</div>
+        <div class="pace-title">언제든</div>
+        <div class="pace-desc">힘든 날은 멈춰도 돼요</div>
+      </div>
+    </div>
+
+    <!-- 응원 메시지 -->
+    <div class="farewell">
+      <div class="farewell-quote">"</div>
+      <p class="farewell-main">
+        이룸 작가의 데뷔를<br>
+        응원합니다.
+      </p>
+      <p class="farewell-sub">
+        세상에 하나뿐인 그림책이,<br>
+        지금 이 손끝에서 만들어지고 있어요.
+      </p>
+      <div class="farewell-brand">POGNARU · 포근나루</div>
+    </div>
+    
+  </div>
+
+  <script>
+    // 체크리스트 상태 (24개 스프레드)
+    const spreads = [];
+    for (let i = 0; i < 24; i++) {
+      spreads.push({ sketch: false, color: false });
+    }
+    
+    // localStorage에서 불러오기 (로컬 파일에서는 작동, 다현씨/이룸 작가의 진행 상태 저장)
+    try {
+      const saved = localStorage.getItem('pognaru-cat-journey');
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (Array.isArray(parsed) && parsed.length === 24) {
+          for (let i = 0; i < 24; i++) {
+            spreads[i] = parsed[i];
+          }
+        }
+      }
+    } catch(e) { /* 처음 열 때는 비어있음 */ }
+    
+    const checklist = document.getElementById('checklist');
+    const progressCount = document.getElementById('progress-count');
+    const progressFill = document.getElementById('progress-fill');
+    
+    function render() {
+      checklist.innerHTML = '';
+      spreads.forEach((s, idx) => {
+        const done = s.sketch && s.color;
+        const partial = s.sketch || s.color;
+        
+        const div = document.createElement('div');
+        div.className = 'spread' + (done ? ' done' : partial ? ' partial' : '');
+        
+        div.innerHTML = `
+          <div class="spread-num">#${String(idx + 1).padStart(2, '0')}</div>
+          <button class="spread-check" data-idx="${idx}" data-type="sketch">
+            <span class="check-circle ${s.sketch ? 'checked' : ''}"></span>
+            <span class="check-label">스케치</span>
+          </button>
+          <button class="spread-check" data-idx="${idx}" data-type="color">
+            <span class="check-circle ${s.color ? 'checked' : ''}"></span>
+            <span class="check-label">채색</span>
+          </button>
+        `;
+        
+        checklist.appendChild(div);
+      });
+      
+      // 진행률 업데이트
+      const doneCount = spreads.filter(s => s.sketch && s.color).length;
+      progressCount.textContent = doneCount + ' / 24';
+      progressFill.style.width = (doneCount / 24 * 100) + '%';
+      
+      // 이벤트 다시 연결
+      document.querySelectorAll('.spread-check').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          const idx = parseInt(btn.dataset.idx);
+          const type = btn.dataset.type;
+          spreads[idx][type] = !spreads[idx][type];
+          
+          // 저장
+          try {
+            localStorage.setItem('pognaru-cat-journey', JSON.stringify(spreads));
+          } catch(e) { /* 저장 실패 무시 */ }
+          
+          render();
+        });
+      });
+    }
+    
+    render();
+  </script>
+</body>
+</html>

@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>나는야 고양이! · 콘티 — 이룸 작가 그림책</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Noto+Serif+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: linear-gradient(180deg, #F5EDE0 0%, #EBE0CC 100%);
+      font-family: 'Noto Serif KR', 'Apple SD Gothic Neo', 'Malgun Gothic', Georgia, serif;
+      color: #3D2C1F;
+      min-height: 100vh;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 40px 24px 80px;
+    }
+
+    /* 상단 표제 */
+    .header { text-align: center; margin-bottom: 40px; }
+    .header-eyebrow {
+      font-family: 'Cormorant Garamond', serif;
+      color: #8B6F47;
+      letter-spacing: 0.15em;
+      font-size: 12px;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+    .header-title {
+      font-family: 'Cormorant Garamond', 'Noto Serif KR', serif;
+      font-size: 48px;
+      color: #3D2C1F;
+      font-weight: 600;
+      letter-spacing: -0.03em;
+      margin-bottom: 8px;
+    }
+    .header-sub { color: #8B6F47; font-size: 15px; }
+    .nav-back {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 8px 20px;
+      background: #3D2C1F;
+      color: #F5EDE0;
+      font-size: 13px;
+      letter-spacing: 0.05em;
+      text-decoration: none;
+      border-radius: 2px;
+    }
+
+    /* 안내 박스 */
+    .guide-box {
+      background: #FAF6F0;
+      border: 1px solid #D4BFA0;
+      padding: 24px 28px;
+      margin-bottom: 40px;
+      font-size: 14px;
+      line-height: 1.8;
+      color: #5C4A35;
+    }
+    .guide-box h3 {
+      font-family: 'Cormorant Garamond', 'Noto Serif KR', serif;
+      font-size: 18px;
+      color: #3D2C1F;
+      margin-bottom: 12px;
+      font-weight: 600;
+    }
+    .legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-top: 14px;
+      font-size: 13px;
+    }
+    .legend span { display: flex; align-items: center; gap: 6px; }
+    .legend .swatch {
+      width: 16px; height: 16px; border-radius: 3px; flex-shrink: 0;
+    }
+
+    /* 흐름 리듬 바 */
+    .rhythm {
+      margin-bottom: 48px;
+    }
+    .rhythm-title {
+      font-family: 'Cormorant Garamond', 'Noto Serif KR', serif;
+      font-size: 20px; color: #3D2C1F; font-weight: 600; margin-bottom: 6px;
+    }
+    .rhythm-desc { font-size: 13px; color: #8B6F47; margin-bottom: 16px; }
+
+    /* 스프레드 카드 */
+    .spread {
+      background: #FAF6F0;
+      border: 1px solid #D4BFA0;
+      margin-bottom: 28px;
+      overflow: hidden;
+    }
+    .spread.climax { border: 2px solid #C97D5C; }
+    .spread-head {
+      display: flex;
+      align-items: baseline;
+      gap: 12px;
+      padding: 16px 24px 12px;
+      border-bottom: 1px solid #EBE0CC;
+      flex-wrap: wrap;
+    }
+    .spread-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 13px;
+      letter-spacing: 0.1em;
+      color: #F5EDE0;
+      background: #C97D5C;
+      padding: 3px 10px;
+      border-radius: 999px;
+    }
+    .spread.special .spread-num { background: #8B6F47; }
+    .spread-name {
+      font-family: 'Cormorant Garamond', 'Noto Serif KR', serif;
+      font-size: 19px; color: #3D2C1F; font-weight: 600;
+    }
+    .spread-tag {
+      font-size: 11px; color: #C97D5C; font-style: italic;
+      border: 1px solid #E0C9B0; padding: 2px 8px; border-radius: 999px;
+    }
+    .spread-body {
+      display: grid;
+      grid-template-columns: minmax(280px, 420px) 1fr;
+      gap: 24px;
+      padding: 20px 24px 24px;
+    }
+    .spread-svg {
+      width: 100%;
+      border: 1px solid #E0C9B0;
+      background: #FFFCF8;
+      border-radius: 4px;
+    }
+    .spread-text { font-size: 14px; line-height: 1.75; color: #5C4A35; }
+    .spread-text .quote {
+      background: #F5EDE0;
+      border-left: 3px solid #C97D5C;
+      padding: 10px 14px;
+      margin-bottom: 12px;
+      color: #3D2C1F;
+      white-space: pre-line;
+      font-size: 14px;
+    }
+    .spread-text .quote.empty {
+      border-left-color: #D4BFA0; color: #A8967E; font-style: italic;
+    }
+    .spread-text .label {
+      font-size: 12px; color: #8B6F47; font-weight: 600;
+      letter-spacing: 0.04em; margin-bottom: 4px; display: block;
+    }
+    .spread-text .desc { margin-bottom: 14px; }
+    .spread-text .balance {
+      font-size: 12px; color: #8B6F47; background: #FFFCF8;
+      border: 1px dashed #D4BFA0; padding: 8px 12px; border-radius: 4px;
+    }
+    .spread-text .balance b { color: #C97D5C; }
+
+    /* SVG 내부 라벨 글씨 */
+    .svg-label { font-family: 'Noto Serif KR', serif; font-size: 11px; fill: #8B6F47; }
+    .svg-glabel { font-family: 'Noto Serif KR', serif; font-size: 10px; fill: #C97D5C; font-weight: 600; }
+
+    .footer {
+      text-align: center; margin-top: 48px;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 12px; color: #8B6F47; letter-spacing: 0.2em;
+    }
+
+    @media (max-width: 760px) {
+      .spread-body { grid-template-columns: 1fr; }
+      .header-title { font-size: 36px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+
+    <div class="header">
+      <p class="header-eyebrow">Storyboard · 그림책 콘티</p>
+      <h1 class="header-title">나는야 고양이!</h1>
+      <p class="header-sub">글 햇살 · 그림 이룸 &nbsp;|&nbsp; A5 · 24 스프레드</p>
+      <a class="nav-back" href="index.html">← 협업일지로 돌아가기</a>
+    </div>
+
+    <!-- 안내 -->
+    <div class="guide-box">
+      <h3>콘티 보는 법</h3>
+      각 칸은 펼친 책 한 장면(스프레드)이에요. 왼쪽이 <b>L 페이지</b>, 오른쪽이 <b>R 페이지</b>예요.
+      그림 속 도형은 <b>대략적인 구도 가이드</b>일 뿐이니, 실제 그림은 이룸 작가가 자유롭게 그리면 돼요.
+      노란 박스는 <b>글이 들어갈 자리</b>예요.
+      <div class="legend">
+        <span><span class="swatch" style="background:#C97D5C;"></span> 글 자리</span>
+        <span><span class="swatch" style="background:#7A9E7E;"></span> 고양이 (주인공)</span>
+        <span><span class="swatch" style="background:#B08968;"></span> 사람</span>
+        <span><span class="swatch" style="background:#A8C5D6;"></span> 배경·하늘·물</span>
+        <span><span class="swatch" style="background:#E0C9B0;"></span> 사물·집·풀</span>
+      </div>
+    </div>
+
+    <!-- 리듬 -->
+    <div class="rhythm">
+      <div class="rhythm-title">전체 흐름의 리듬</div>
+      <p class="rhythm-desc">양면 펼침(■)은 이야기가 크게 출렁이는 곳이에요. 한 면(▫) 장면들 사이에 펼침면을 두어 호흡을 줬어요. 클라이맥스는 #16(크기 역전)과 #23(나방)이에요.</p>
+      <svg viewBox="0 0 960 70" class="spread-svg" style="border:none;background:transparent;">
+        <!-- 24 spreads rhythm bar -->
+        <!-- single=▫ small, spread=■ tall, climax=terracotta -->
+        <g font-family="'Cormorant Garamond',serif" font-size="9" fill="#8B6F47">
+          <!-- positions -->
+          <!-- helper: each cell 38px wide starting at x=10 -->
+        </g>
+        <!-- bars -->
+        <!-- 3 -->
+        <g>
+          <rect x="14" y="35" width="22" height="20" fill="#D9C3A8"/><text x="25" y="68" text-anchor="middle" font-size="9" fill="#8B6F47">3</text>
+          <rect x="52" y="35" width="22" height="20" fill="#D9C3A8"/><text x="63" y="68" text-anchor="middle" font-size="9" fill="#8B6F47">4</text>
+          <rect x="90" y="18" width="22" height="37" fill="#A8C5D6"/><text x="101" y="68" text-anchor="middle" font-size="9" fill="#8B6F47">5</text>
+          <rect x="128" y="18" width="22" height="37" fill="#A8C5D6"/><text x="139" y="68" text-anchor="middle" font-size="9" fill="#8B6F47">6</text>
+          <rect x="166" y="35" width="22" height="20" fill="#D9C3A8"/><text x="177" y="68" text-anchor="middle" font-size="9" fill="#8B6F47">7</text>
+          <rect x="204" y="35" width="22" height="20" fill="#D9C3A8"/><text x="215" y="68" text-anchor="middle" font-size="9" fill="#8B6F47">8</text>
+          <rect x="242" y="18" width="22" height="37" fill="#A8C5D6"/><text x="253" y="68" text-anchor="middle" font-size="9" fill="#8B6F47">9</text>
+          <rect x="280" y="35" width="22" height="20" fill="#D9C3A8"/><text x="291" y="68" text-anchor="middle" font-size="9" fill="#8B6F47">10</text>
+          <rect x="318" y="35" width="22" height="20" fill="#D9C3A8"/><text x="329" y="68" text-anchor="middle" font-size="9" fill="#8B6F47">11</text>
+          <rect x="356" y="35" width="22" height="20" fill="#D9C3A8"/><text x="367" y="68" text-anchor="middle" font-size="9" fill="#8B6F47">12</text>
+          <rect x="394" y="18" width="22" height="37" fill="#A8C5D6"/><text x="405" y="68" text-anchor="middle" font-size="9" fill="#8B6F47">13</text>
+          <rect x="432" y="35" width="22" height="20" fill="#D9C3A8"/><text x="443" y="68" text-anchor="middle" font-size="9" fill="#8B6F47">14</text>
+          <rect x="470" y="35" width="22" height="20" fill="#D9C3A8"/><text x="481" y="68" text-anchor="middle" font-size="9" fill="#8B6F47">15</text>
+          <rect x="508" y="10" width="22" height="45" fill="#C97D5C"/><text x="519" y="68" text-anchor="middle" font-size="9" fill="#C97D5C" font-weight="700">16</text>
+          <rect x="546" y="35" width="22" height="20" fill="#D9C3A8"/><text x="557" y="68" text-anchor="middle" font-size="9" fill="#8B6F47">17</text>
+          <rect x="584" y="35" width="22" height="20" fill="#D9C3A8"/><text x="595" y="68" text-anchor="middle" font-size="9" fill="#8B6F47">18</text>
+          <rect x="622" y="35" width="22" height="20" fill="#D9C3A8"/><text x="633" y="68" text-anchor="middle" font-size="9" fill="#8B6F47">19</text>
+          <rect x="660" y="35" width="22" height="20" fill="#D9C3A8"/><text x="671" y="68" text-anchor="middle" font-size="9" fill="#8B6F47">20</text>
+          <rect x="698" y="18" width="22" height="37" fill="#A8C5D6"/><text x="709" y="68" text-anchor="middle" font-size="9" fill="#8B6F47">21</text>
+          <rect x="736" y="35" width="22" height="20" fill="#D9C3A8"/><text x="747" y="68" text-anchor="middle" font-size="9" fill="#8B6F47">22</text>
+          <rect x="774" y="10" width="22" height="45" fill="#C97D5C"/><text x="785" y="68" text-anchor="middle" font-size="9" fill="#C97D5C" font-weight="700">23</text>
+          <rect x="812" y="35" width="22" height="20" fill="#D9C3A8"/><text x="823" y="68" text-anchor="middle" font-size="9" fill="#8B6F47">24</text>
+        </g>
+        <text x="930" y="30" font-size="9" fill="#A8C5D6" font-weight="700">■ 펼침</text>
+        <text x="930" y="48" font-size="9" fill="#8B6F47">▫ 한 면</text>
+      </svg>
+    </div>
+
+    <!-- ===== 스프레드들 ===== -->
+    <div id="spreads"></div>
+
+    <div class="footer">POGNARU · 포근나루 편집부</div>
+  </div>
+
+  <script>
+  // 한 면(single) 프레임: 가운데 책등 선이 있는 펼침 틀
+  function frame(inner) {
+    return `<svg viewBox="0 0 420 260" class="spread-svg">
+      <rect x="6" y="6" width="408" height="248" rx="4" fill="#FFFCF8" stroke="#E0C9B0"/>
+      <line x1="210" y1="6" x2="210" y2="254" stroke="#E0C9B0" stroke-dasharray="4 4"/>
+      <text x="108" y="22" text-anchor="middle" class="svg-label">L 페이지</text>
+      <text x="312" y="22" text-anchor="middle" class="svg-label">R 페이지</text>
+      ${inner}
+    </svg>`;
+  }
+  // 펼침(spread) 프레임: 책등 옅게, 양면 하나의 그림
+  function frameWide(inner) {
+    return `<svg viewBox="0 0 420 260" class="spread-svg">
+      <rect x="6" y="6" width="408" height="248" rx="4" fill="#FFFCF8" stroke="#C97D5C" stroke-width="1.5"/>
+      <line x1="210" y1="30" x2="210" y2="254" stroke="#F0E0CC" stroke-dasharray="3 5"/>
+      <text x="210" y="20" text-anchor="middle" class="svg-glabel">⟵ 양면 펼침 ⟶</text>
+      ${inner}
+    </svg>`;
+  }
+
+  // 자주 쓰는 조각들
+  const C = { cat:'#7A9E7E', person:'#B08968', sky:'#A8C5D6', obj:'#E0C9B0', text:'#C97D5C' };
+  // 글자리 박스
+  function tbox(x,y,w,h){ return `<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="3" fill="#C97D5C" opacity="0.16" stroke="#C97D5C" stroke-dasharray="3 3"/><text x="${x+w/2}" y="${y+h/2+4}" text-anchor="middle" class="svg-glabel">글</text>`; }
+  // 고양이 단순 도형(원=머리+몸, 귀, 꼬리)
+  function cat(cx,cy,s){ s=s||1; return `<g>
+    <ellipse cx="${cx}" cy="${cy}" rx="${22*s}" ry="${16*s}" fill="${C.cat}" opacity="0.55"/>
+    <circle cx="${cx-16*s}" cy="${cy-10*s}" r="${10*s}" fill="${C.cat}" opacity="0.7"/>
+    <path d="M${cx-22*s},${cy-16*s} l${4*s},${-9*s} l${6*s},${6*s} z" fill="${C.cat}" opacity="0.7"/>
+    <path d="M${cx-12*s},${cy-18*s} l${4*s},${-9*s} l${5*s},${7*s} z" fill="${C.cat}" opacity="0.7"/>
+    <path d="M${cx+20*s},${cy} q${16*s},${-4*s} ${14*s},${-18*s}" stroke="${C.cat}" stroke-width="${4*s}" fill="none" opacity="0.7"/>
+  </g>`; }
+  // 사람(다리+발 위주이거나 전신) - 단순 기둥
+  function person(cx,cy,h){ h=h||60; return `<g>
+    <circle cx="${cx}" cy="${cy-h}" r="11" fill="${C.person}" opacity="0.6"/>
+    <rect x="${cx-12}" y="${cy-h+10}" width="24" height="${h}" rx="10" fill="${C.person}" opacity="0.5"/>
+  </g>`; }
+  function arrow(x1,y1,x2,y2){ return `<defs><marker id="ah" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 z" fill="#C97D5C"/></marker></defs><line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="#C97D5C" stroke-width="1.5" marker-end="url(#ah)" opacity="0.8"/>`; }
+
+  const spreads = [
+    {n:'표지', name:'앞표지', tag:'Cover', special:true,
+      svg: frame(`<rect x="20" y="30" width="380" height="160" fill="${C.sky}" opacity="0.25"/>
+        <rect x="20" y="170" width="380" height="80" fill="${C.obj}" opacity="0.4"/>
+        ${cat(210,180,1.4)}
+        ${tbox(120,40,180,40)}`),
+      q:'나는야 고양이!\n(제목)', desc:'아파트 뒷골목, 저녁빛. 고양이가 정면을 당당하게 바라봐요. 제목은 위쪽, 작가 이름은 아래쪽.',
+      bal:'표지는 <b>고양이 눈빛</b>이 독자와 마주치게. 한눈에 주인공이 누군지 보이도록.'},
+
+    {n:'면지 1', name:'앞 면지', tag:'패턴', special:true,
+      svg: frame(`<g opacity="0.5">
+        ${[40,120,200,280,360].map((x,i)=>`<text x="${x}" y="${80+(i%2)*60}" font-size="20">🐾</text>`).join('')}
+        ${[80,160,240,320].map((x,i)=>`<text x="${x}" y="${150+(i%2)*50}" font-size="20">🐾</text>`).join('')}
+      </g>`),
+      q:'(글 없음)', empty:true, desc:'골목 타일·작은 화분·고양이 발자국이 반복되는 패턴. 책의 분위기를 여는 첫 장.',
+      bal:'글 없이 <b>패턴만</b>. 뒤 면지와 짝을 이루게.'},
+
+    {n:'면지 2', name:'표제지', tag:'Title', special:true,
+      svg: frame(`${cat(312,150,1.2)}${tbox(250,40,130,40)}<text x="312" y="220" text-anchor="middle" class="svg-label">글·그림 이름</text>`),
+      q:'나는야 고양이!\n글 햇살 · 그림 이룸', desc:'오른쪽에 꼬리 세운 고양이 실루엣. 왼쪽은 비워 여백.',
+      bal:'<b>여백</b>이 주인공. 오른쪽 실루엣 하나로 충분해요.'},
+
+    {n:1, name:'아파트 뒷골목에 사는 고양이', tag:'한 면',
+      svg: frame(`<rect x="216" y="30" width="190" height="120" fill="${C.obj}" opacity="0.4"/>
+        <rect x="240" y="40" width="30" height="40" fill="${C.sky}" opacity="0.4"/><rect x="290" y="40" width="30" height="40" fill="${C.sky}" opacity="0.4"/>
+        <rect x="216" y="150" width="190" height="100" fill="${C.obj}" opacity="0.3"/>
+        ${cat(300,200,1)}
+        ${tbox(20,180,170,60)}`),
+      q:'나는 아파트 뒷골목에 사는\n고양이예요.', desc:'R 전체: 좁은 골목. 위는 아파트 창문, 아래는 흙길. 가운데 고양이가 걸어가요.',
+      bal:'<b>글은 L 아래</b>, 그림은 R. 시선이 왼→오른쪽으로 흐르게.'},
+
+    {n:2, name:'언제부터인지 잘 몰라요', tag:'한 면',
+      svg: frame(`${cat(110,160,1.1)}
+        <text x="150" y="90" font-size="20" opacity="0.6">?</text><text x="120" y="70" font-size="16" opacity="0.5">?</text><text x="175" y="110" font-size="14" opacity="0.4">?</text>
+        ${tbox(230,40,160,55)}`),
+      q:'언제부터 여기에 있었는지는\n잘 몰라요.', desc:'L 전체: 고양이가 돌 위에 앉아 하늘을 봐요. R 위에 글, 머리 위로 물음표가 둥둥.',
+      bal:'<b>글은 R 위</b>. 고양이 시선이 물음표 쪽(위)을 향하게.'},
+
+    {n:3, name:'비가 엄청 많이 내린 어느 날', tag:'펼침 ■', wide:true,
+      svg: frameWide(`${[...Array(14)].map((_,i)=>`<line x1="${30+i*28}" y1="30" x2="${10+i*28}" y2="250" stroke="${C.sky}" stroke-width="2" opacity="0.5"/>`).join('')}
+        <rect x="10" y="225" width="400" height="25" fill="${C.sky}" opacity="0.4"/>
+        ${cat(210,215,0.9)}
+        ${tbox(24,40,180,55)}`),
+      q:'비가 엄청 많이 내린 어느 날이었어요.\n콸콸 쏟아지는 물을 피해', desc:'양면 가득 장대비. 빗줄기 사선으로 굵게, 바닥에 물이 넘쳐요. 아래쪽에 고양이가 웅크려요.',
+      bal:'첫 <b>펼침면</b> — 비를 화면 가득. 글은 L 위 모퉁이로 작게.'},
+
+    {n:4, name:'높은 곳으로, 높은 곳으로', tag:'펼침 ■', wide:true,
+      svg: frameWide(`<rect x="30" y="200" width="120" height="50" fill="${C.obj}" opacity="0.4"/>
+        <rect x="150" y="150" width="120" height="100" fill="${C.obj}" opacity="0.4"/>
+        <rect x="270" y="90" width="130" height="160" fill="${C.obj}" opacity="0.4"/>
+        ${cat(80,185,0.7)}${cat(200,135,0.8)}${cat(330,75,0.9)}
+        ${arrow(110,180,170,135)}${arrow(235,130,300,80)}
+        ${tbox(250,40,150,45)}`),
+      q:'높은 곳으로, 높은 곳으로\n위로, 위로 올라가다 보니', desc:'계단·담장·화단을 타고 점점 위로. 같은 고양이를 3번 반복해 올라가는 동선을 보여줘요.',
+      bal:'왼쪽 아래 → <b>오른쪽 위로 대각선</b> 상승. 글은 R 위.'},
+
+    {n:5, name:'여기까지 왔어요', tag:'한 면',
+      svg: frame(`<rect x="20" y="120" width="180" height="130" fill="${C.obj}" opacity="0.35"/>
+        <rect x="40" y="140" width="30" height="40" fill="${C.sky}" opacity="0.3"/><rect x="90" y="160" width="30" height="40" fill="${C.sky}" opacity="0.3"/>
+        ${cat(300,120,1)}<rect x="240" y="140" width="150" height="14" fill="${C.obj}" opacity="0.6"/>
+        ${tbox(245,50,140,45)}`),
+      q:'여기까지 왔어요.', desc:'L은 담장 위에서 내려다본 골목 풍경(고양이 시점). R엔 담장 위에 앉은 고양이, "괜찮은데?" 하는 표정.',
+      bal:'<b>높이감</b>이 포인트. 시점이 위에서 아래를 보게.'},
+
+    {n:6, name:'이전에 살던 곳은 생각나지 않아요', tag:'한 면',
+      svg: frame(`<ellipse cx="105" cy="130" rx="80" ry="60" fill="${C.cat}" opacity="0.25"/>
+        <ellipse cx="105" cy="130" rx="40" ry="30" fill="#FFFCF8"/><ellipse cx="105" cy="130" rx="22" ry="18" fill="${C.obj}" opacity="0.4"/>
+        <text x="105" y="135" text-anchor="middle" class="svg-label">희미한 기억</text>
+        ${[260,300,340].map((x,i)=>`<text x="${x}" y="${200-i*5}" font-size="14" opacity="${0.5-i*0.15}">🐾</text>`).join('')}
+        ${tbox(235,60,160,55)}`),
+      q:'이전에 살던 곳은\n이제 생각나지 않아요.', desc:'L 전체: 고양이 눈 클로즈업, 눈동자에 흐릿한 풍경이 비쳐요. R엔 지워지는 발자국과 글.',
+      bal:'<b>안개처럼 흐릿하게</b>. 발자국이 점점 옅어지며 사라지게.'},
+
+    {n:7, name:'지금 이곳은 꽤 살 만해요', tag:'펼침 ■', wide:true,
+      svg: frameWide(`<circle cx="350" cy="55" r="22" fill="#F0C674" opacity="0.5"/>
+        ${[...Array(6)].map((_,i)=>`<line x1="350" y1="55" x2="${350+Math.cos(i)*40}" y2="${55+Math.sin(i)*40}" stroke="#F0C674" stroke-width="2" opacity="0.4"/>`).join('')}
+        <rect x="10" y="210" width="400" height="40" fill="${C.obj}" opacity="0.35"/>
+        <text x="80" y="225" font-size="16">🌸</text><text x="300" y="230" font-size="16">🌷</text>
+        ${cat(190,195,1.1)}
+        ${tbox(24,40,170,50)}`),
+      q:'지금 살고 있는 이곳은\n꽤 살 만해요.', desc:'양면 가득 따뜻한 낮 골목. 햇살, 화단의 꽃. 고양이가 기지개를 켜며 만족스러운 표정.',
+      bal:'어두운 비(#3) 다음의 <b>밝은 펼침</b> — 대비로 안도감을 줘요.'},
+
+    {n:8, name:'마음에 쏙 드는 네모난 집', tag:'한 면',
+      svg: frame(`<rect x="250" y="120" width="120" height="90" fill="${C.obj}" opacity="0.5"/>
+        <path d="M245,120 L310,80 L375,120 z" fill="${C.obj}" opacity="0.6"/>
+        <circle cx="310" cy="170" r="22" fill="#FFFCF8" stroke="${C.obj}"/>
+        ${cat(310,225,0.7)}
+        ${tbox(20,160,175,75)}`),
+      q:'나한텐 마음에 쏙 드는\n네모난 집이 있어요.\n언젠가부터 생긴 집이에요.', desc:'R 전체: 귀여운 나무 고양이 집 클로즈업. 안에 방석, 앞에 고양이가 뿌듯하게.',
+      bal:'<b>집을 크게, 주인공처럼</b>. 글은 L 아래에 세 줄.'},
+
+    {n:9, name:'처음엔 풀숲에서 잤어요', tag:'한 면',
+      svg: frame(`${[...Array(9)].map((_,i)=>`<path d="M${30+i*18},250 q${5},${-50-(i%3)*15} ${10},0" stroke="${C.obj}" stroke-width="3" fill="none" opacity="0.7"/>`).join('')}
+        ${cat(105,210,0.7)}
+        ${tbox(230,160,160,75)}`),
+      q:'처음엔 뒷골목 화단의\n마구 자란 풀숲에서\n잠을 잤어요.', desc:'L 전체: 크게 우거진 풀숲, 그 속에 작게 웅크린 고양이. 조금 불편한 표정.',
+      bal:'<b>풀이 크고 고양이가 작게</b> — 다음 장 "집"과 대비돼요. 글은 R 아래.'},
+
+    {n:10, name:'나를 따르는 어떤 사람이', tag:'한 면',
+      svg: frame(`${person(110,250,150)}<rect x="78" y="170" width="44" height="34" fill="${C.obj}" opacity="0.6"/><text x="100" y="160" class="svg-label">집 든 손</text>
+        ${cat(150,235,0.6)}${arrow(150,220,120,205)}
+        ${tbox(235,50,160,90)}`),
+      q:'그런데 나를 따르는\n어떤 사람이\n내게 딱 맞는\n네모 집을 가져왔어요.', desc:'L: 사람의 다리와 발만 보여요(얼굴 X). 손엔 고양이 집. 고양이가 발 옆에서 올려다봐요.',
+      bal:'사람은 <b>일부러 얼굴을 안 보이게</b> — 고양이 시점이니까. 글은 R.'},
+
+    {n:11, name:'그 사람은 나를 정말 좋아해요', tag:'펼침 ■', wide:true,
+      svg: frameWide(`<rect x="10" y="210" width="400" height="40" fill="${C.obj}" opacity="0.3"/>
+        <rect x="120" y="150" width="70" height="55" fill="${C.obj}" opacity="0.5"/><path d="M118,150 L155,125 L192,150 z" fill="${C.obj}" opacity="0.6"/>
+        ${cat(150,190,0.9)}
+        <g><circle cx="270" cy="150" r="14" fill="${C.person}" opacity="0.6"/><path d="M250,170 q20,20 40,0 l5,40 l-50,0 z" fill="${C.person}" opacity="0.5"/></g>
+        ${arrow(255,180,200,190)}
+        ${tbox(250,200,150,45)}`),
+      q:'그 사람은 나를\n정말 좋아해요.', desc:'양면: 집 앞 고양이, 옆에 사람이 쪼그려 앉아 손을 내밀어요. 사람 표정은 행복·설렘. 따뜻한 저녁빛.',
+      bal:'둘이 처음 <b>한 화면에</b>. 사람이 몸을 낮춰 고양이와 눈높이를 맞춰요.'},
+
+    {n:12, name:'처음 마주친 날', tag:'한 면',
+      svg: frame(`<rect x="20" y="40" width="180" height="210" fill="${C.obj}" opacity="0.2"/>
+        ${person(60,240,170)}<text x="60" y="60" text-anchor="middle" class="svg-label">아주 크게</text>
+        ${cat(165,225,0.7)}${arrow(150,220,95,210)}
+        ${tbox(235,50,160,80)}`),
+      q:'그 사람을 길에서\n처음 만난 날이었어요.\n너무 커 보여서 무서웠어요.', desc:'L: 좁은 골목. 한쪽 고양이, 반대쪽에서 아주 큰 사람이 와요. 고양이 눈엔 사람이 엄청 크게. 긴장한 표정.',
+      bal:'<b>크기 대비</b>가 핵심 — 사람을 화면 끝까지 크게. 다음 장 반전의 준비.'},
+
+    {n:13, name:'있는 힘껏 몸을 부풀렸어요', tag:'한 면',
+      svg: frame(`<g>
+        <ellipse cx="105" cy="160" rx="50" ry="42" fill="${C.cat}" opacity="0.4"/>
+        ${[...Array(16)].map((_,i)=>`<line x1="105" y1="160" x2="${105+Math.cos(i/16*6.28)*60}" y2="${160+Math.sin(i/16*6.28)*52}" stroke="${C.cat}" stroke-width="2" opacity="0.6"/>`).join('')}
+        <circle cx="105" cy="160" r="20" fill="${C.cat}" opacity="0.7"/>
+        </g>
+        ${tbox(230,170,160,55)}`),
+      q:'나도 모르게\n있는 힘껏 몸을 부풀렸지요.', desc:'L 전체: 털을 곤두세우고 등을 아치로 구부린 고양이. 털이 사방으로 뻗쳐 최대한 크고 무섭게(코믹하게).',
+      bal:'<b>한 면을 꽉 채워</b> 부풀린 모습을. 글은 R 아래 짧게.'},
+
+    {n:14, name:'그 사람이 갑자기 쪼끄매졌어요!', tag:'펼침 ■ · 클라이맥스', wide:true, climax:true, special:true,
+      svg: frameWide(`<g>
+        <ellipse cx="130" cy="150" rx="45" ry="38" fill="${C.cat}" opacity="0.45"/>
+        ${[...Array(14)].map((_,i)=>`<line x1="130" y1="150" x2="${130+Math.cos(i/14*6.28)*55}" y2="${150+Math.sin(i/14*6.28)*48}" stroke="${C.cat}" stroke-width="2" opacity="0.6"/>`).join('')}
+        <circle cx="130" cy="150" r="18" fill="${C.cat}" opacity="0.7"/>
+        </g>
+        <g><circle cx="320" cy="190" r="10" fill="${C.person}" opacity="0.6"/><path d="M305,205 q15,15 30,0 l3,28 l-36,0 z" fill="${C.person}" opacity="0.5"/></g>
+        <text x="320" y="165" text-anchor="middle" class="svg-glabel">놀라 작게!</text>
+        ${tbox(248,205,155,42)}`),
+      q:'그런데 나를 본 그 사람은\n갑자기 쪼끄매졌어요.\n몸을 부풀린 내가\n무서웠나 봐요.', desc:'가장 재미있는 장면! L엔 당당히 부푼 고양이, R엔 아주 작게 쭈그린 사람(겁먹은 표정). 크기가 역전!',
+      bal:'<b>크기 역전이 웃음 포인트</b>. 왼쪽 큰 고양이 ↔ 오른쪽 작은 사람, 펼침면 가득.'},
+
+    {n:15, name:'나만 보면 몸을 낮춰요', tag:'한 면',
+      svg: frame(`${cat(60,180,0.8)}${arrow(95,180,150,185)}
+        <g opacity="0.6"><circle cx="190" cy="120" r="9" fill="${C.person}"/><rect x="182" y="128" width="16" height="40" rx="6" fill="${C.person}"/></g>
+        <g opacity="0.5"><circle cx="320" cy="200" r="9" fill="${C.person}"/><path d="M308,212 q12,12 24,0 l3,22 l-30,0z" fill="${C.person}"/></g>
+        ${arrow(210,150,300,195)}
+        ${tbox(235,40,160,75)}`),
+      q:'그 뒤로는\n나만 보면\n가던 길을 멈추고\n몸을 낮춰요.', desc:'L~R로 동작 흐름: 고양이가 걸어오고 → 멀리 사람이 보이다가 → 발견하자마자 쭈그려 앉아요(2~3컷처럼).',
+      bal:'<b>동작 연속</b>으로. 사람이 점점 낮아지는 흐름을 화살표처럼.'},
+
+    {n:16, name:'그 사람은 나를 너무 좋아해요', tag:'한 면',
+      svg: frame(`<rect x="245" y="120" width="14" height="120" fill="${C.obj}" opacity="0.5"/>
+        ${cat(300,115,0.9)}<rect x="250" y="125" width="120" height="12" fill="${C.obj}" opacity="0.6"/>
+        <g opacity="0.5"><circle cx="320" cy="215" r="10" fill="${C.person}"/><rect x="311" y="225" width="18" height="20" rx="6" fill="${C.person}"/><line x1="329" y1="228" x2="345" y2="215" stroke="${C.person}" stroke-width="3"/></g>
+        ${tbox(20,165,175,70)}`),
+      q:'그래요.\n그 사람은 나를\n너무 좋아해요.', desc:'R: 고양이가 담장 위에 앉아있고, 아래에서 사람이 손을 흔들어요. 고양이는 시선을 살짝 내리깔아요.',
+      bal:'<b>높낮이로 위계 표현</b> — 고양이 위, 사람 아래. 능청을 그림으로.'},
+
+    {n:17, name:'제법 마음에 드는 사람이에요', tag:'한 면',
+      svg: frame(`${cat(110,150,1.2)}<text x="110" y="215" text-anchor="middle" class="svg-label">고개 갸웃 · 만족</text>
+        ${tbox(225,160,165,70)}`),
+      q:'그래서 내 앞에선\n몸을 부풀리지 않아요.\n제법 마음에 드는\n사람이에요.', desc:'L 전체: 고양이가 집 앞에 앉아 고개를 살짝 기울여요. "음… 인정" 하는 냉정하지만 만족스러운 표정.',
+      bal:'<b>표정 한 컷</b>으로 충분. 클로즈업으로 능청을 살려요.'},
+
+    {n:18, name:'때맞춰 맛있는 먹이를 가져다줘요', tag:'한 면',
+      svg: frame(`<ellipse cx="300" cy="200" rx="45" ry="14" fill="${C.obj}" opacity="0.6"/><text x="300" y="195" text-anchor="middle" font-size="14">🐟</text>
+        ${cat(300,150,0.9)}<text x="300" y="120" text-anchor="middle" class="svg-glabel">황홀</text>
+        ${tbox(20,55,175,80)}`),
+      q:'거기다 배고플 때마다\n맛있는 먹이를\n가져다줘요.', desc:'R: 사람이 밥그릇을 내려놓고, 고양이가 맛있게 먹어요. 그릇엔 생선. 고양이는 황홀한 표정.',
+      bal:'<b>먹는 즐거움</b>을 표정으로. 글은 L.'},
+
+    {n:19, name:'사냥은 이제 놀이가 되었어요', tag:'펼침 ■', wide:true,
+      svg: frameWide(`<rect x="10" y="220" width="400" height="30" fill="${C.obj}" opacity="0.3"/>
+        ${cat(90,180,0.7)}${cat(200,130,0.8)}${cat(320,190,0.7)}
+        <text x="150" y="100" font-size="14">🦋</text><text x="280" y="120" font-size="14">🦋</text>
+        ${arrow(110,170,180,135)}${arrow(220,135,300,175)}
+        ${tbox(245,205,160,42)}`),
+      q:'이제 사냥은\n배가 고파서 하는 게 아니에요.\n튼튼해지려고, 또 재미있어서\n하는 놀이가 되었어요.', desc:'양면: 나비를 신나게 쫓는 고양이. 점프·달리기·구르기 등 역동적 동작. 행복하고 생동감 넘치게.',
+      bal:'<b>움직임이 많은 펼침</b>. 동작을 여러 자세로 흩뿌려 활기를.'},
+
+    {n:20, name:'선물 하나 준비해 줄까 봐요', tag:'한 면',
+      svg: frame(`${cat(105,170,1)}
+        <ellipse cx="140" cy="80" rx="55" ry="30" fill="#FFFCF8" stroke="${C.obj}"/><text x="120" y="78" font-size="13">🍃</text><text x="150" y="88" font-size="12">🪨</text>
+        <circle cx="100" cy="115" r="4" fill="#FFFCF8" stroke="${C.obj}"/><circle cx="115" cy="100" r="6" fill="#FFFCF8" stroke="${C.obj}"/>
+        ${tbox(235,150,160,85)}`),
+      q:'심심한데\n그 사람한테\n선물 하나\n준비해 줄까 봐요.\n가만 보자, 뭐가 좋을까?', desc:'L: 고양이가 앞발을 턱에 괴고 진지하게 고민. 머리 위 생각풍선에 여러 물건이 떠올랐다 사라져요.',
+      bal:'<b>생각풍선</b>으로 고민을 시각화. 글이 많으니 R에 넉넉히.'},
+
+    {n:21, name:'저 새처럼 커다란 나방을!', tag:'펼침 ■ · 클라이맥스', wide:true, climax:true, special:true,
+      svg: frameWide(`<rect x="10" y="30" width="400" height="220" fill="#3D2C1F" opacity="0.12"/>
+        <circle cx="120" cy="70" r="16" fill="#F0C674" opacity="0.6"/><line x1="120" y1="86" x2="120" y2="130" stroke="${C.obj}" stroke-width="3"/>
+        <g><ellipse cx="250" cy="120" rx="40" ry="26" fill="${C.person}" opacity="0.45"/><ellipse cx="220" cy="120" rx="22" ry="30" fill="${C.person}" opacity="0.4"/><ellipse cx="280" cy="120" rx="22" ry="30" fill="${C.person}" opacity="0.4"/></g>
+        <text x="250" y="95" text-anchor="middle" class="svg-glabel">새만큼 큰 나방</text>
+        ${cat(330,210,0.9)}<text x="330" y="240" text-anchor="middle" class="svg-glabel">눈 반짝 · 사냥 자세</text>
+        ${tbox(24,40,170,55)}`),
+      q:'옳지!\n오늘은 저 새처럼\n커다란 나방을 줘야겠어요.', desc:'클라이맥스! 밤 배경, 가로등 불빛 아래 아주 큰 나방이 날아요(새만큼 과장). 고양이가 몸을 낮추고 눈을 빛내며 사냥 직전.',
+      bal:'<b>밤·가로등의 분위기 반전</b>. 나방을 과장되게 크게, 긴장감을.'},
+
+    {n:22, name:'인기 있는 묘생은 피곤해', tag:'한 면 · 엔딩',
+      svg: frame(`<ellipse cx="100" cy="215" rx="30" ry="10" fill="${C.obj}" opacity="0.5"/><text x="100" y="210" text-anchor="middle" font-size="13">🦋</text>
+        ${cat(100,165,1)}<text x="100" y="120" text-anchor="middle" class="svg-glabel">으쓱</text>
+        <g opacity="0.5"><circle cx="320" cy="150" r="11" fill="${C.person}"/><rect x="310" y="160" width="20" height="42" rx="7" fill="${C.person}"/><line x1="312" y1="162" x2="300" y2="140" stroke="${C.person}" stroke-width="3"/><line x1="328" y1="162" x2="340" y2="140" stroke="${C.person}" stroke-width="3"/></g>
+        <text x="320" y="125" text-anchor="middle" class="svg-label">놀라 두 손 번쩍</text>
+        ${tbox(228,165,165,75)}`),
+      q:'그 사람.. 또 나의 실력에\n반하는 건 아니겠죠?\n\n참.. 인기 있는 묘생은\n정말 피곤하다니까요.', desc:'L: 고양이가 나방을 발 아래 두고 의기양양. R엔 놀라 두 손 든 사람. 마지막에 고양이가 눈을 감고 으쓱(엔딩 포즈).',
+      bal:'<b>마지막 한 컷의 능청</b>이 책의 인상을 결정해요. 고양이의 으쓱을 크게.'},
+
+    {n:'면지 3', name:'뒤 면지', tag:'패턴', special:true,
+      svg: frame(`<g opacity="0.5">${[40,120,200,280].map((x,i)=>`<text x="${x}" y="${120+i*8}" font-size="18">🐾</text>`).join('')}<text x="360" y="150" font-size="14" opacity="0.3">🐾</text></g>
+        <text x="210" y="220" text-anchor="middle" class="svg-label">발자국이 골목 밖으로 사라져요</text>`),
+      q:'(글 없음)', empty:true, desc:'앞 면지와 짝을 이루는 패턴. 고양이 발자국이 골목 밖으로 이어지다 사라져요.',
+      bal:'앞 면지와 <b>대칭</b>. 책을 닫는 여운을.'},
+  ];
+
+  const wrap = document.getElementById('spreads');
+  spreads.forEach(s => {
+    const climaxCls = s.climax ? ' climax' : '';
+    const specCls = s.special ? ' special' : '';
+    const num = (typeof s.n === 'number') ? ('#' + String(s.n).padStart(2,'0')) : s.n;
+    const quoteCls = s.empty ? 'quote empty' : 'quote';
+    const el = document.createElement('div');
+    el.className = 'spread' + climaxCls + specCls;
+    el.innerHTML = `
+      <div class="spread-head">
+        <span class="spread-num">${num}</span>
+        <span class="spread-name">${s.name}</span>
+        <span class="spread-tag">${s.tag}</span>
+      </div>
+      <div class="spread-body">
+        <div>${s.svg}</div>
+        <div class="spread-text">
+          <span class="label">📝 들어갈 글</span>
+          <div class="${quoteCls}">${s.q}</div>
+          <span class="label">🎨 그림</span>
+          <p class="desc">${s.desc}</p>
+          <div class="balance">⚖️ 균형 — ${s.bal}</div>
+        </div>
+      </div>`;
+    wrap.appendChild(el);
+  });
+  </script>
+</body>
+</html>
